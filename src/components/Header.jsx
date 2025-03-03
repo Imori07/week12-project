@@ -5,6 +5,7 @@ import {
   SignUpButton,
   UserButton,
 } from '@clerk/nextjs';
+import { FaPlus } from 'react-icons/fa';
 import Link from 'next/link';
 
 export default function Header() {
@@ -25,10 +26,11 @@ export default function Header() {
         <SignedIn>
           <div className='flex items-center'>
             <Link
-              className='bg-slate-900 p-2 m-2 rounded-lg hover:bg-slate-800'
-              href='/posts'
+              href='/new-post'
+              className='text-white m-3 p-2 flex items-center rounded-xl bg-slate-600 hover:bg-slate-700'
             >
-              Posts
+              <FaPlus className='mr-1' />
+              <span>Create</span>
             </Link>
             <UserButton />
           </div>
