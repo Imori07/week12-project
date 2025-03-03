@@ -7,3 +7,10 @@ export const fetchUser = async (username) => {
   );
   return user.rows[0];
 };
+
+export const fetchUserByClerkId = async (clerkId) => {
+  const user = await db.query(`SELECT * FROM users WHERE clerk_id = $1`, [
+    clerkId,
+  ]);
+  return user.rows[0];
+};

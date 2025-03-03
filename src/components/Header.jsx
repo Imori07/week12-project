@@ -1,3 +1,4 @@
+import { fetchUserByClerkId } from '@/utils/api';
 import {
   SignedIn,
   SignedOut,
@@ -5,10 +6,24 @@ import {
   SignUpButton,
   UserButton,
 } from '@clerk/nextjs';
-import { FaPlus } from 'react-icons/fa';
+import { currentUser } from '@clerk/nextjs/server';
 import Link from 'next/link';
 
-export default function Header() {
+export default async function Header() {
+  const user = await currentUser();
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
+
+  const fetchedUser = await fetchUserByClerkId(user.id);
+
+  if (!fetchedUser) {
+    return <div>User not found</div>;
+  }
+
+  const username = fetchedUser.username;
+
   return (
     <header className='p-4 flex justify-between items-center'>
       <Link href='/'>
@@ -30,11 +45,10 @@ export default function Header() {
         <SignedIn>
           <div className='flex items-center'>
             <Link
-              href='/create-review'
+              href={`/user-profile/${username}`}
               className='text-white m-3 p-1 flex items-center rounded-xl bg-slate-600 hover:bg-slate-700'
             >
-              <FaPlus className='mr-1' />
-              <span>Create</span>
+              Profile
             </Link>
             <UserButton />
           </div>
