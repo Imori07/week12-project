@@ -5,8 +5,6 @@ import { redirect } from 'next/navigation';
 const CreateProfile = async () => {
   const user = await currentUser(); // Craig's hint
 
-  console.log({ user });
-
   if (!user) {
     redirect('/sign-in');
   }

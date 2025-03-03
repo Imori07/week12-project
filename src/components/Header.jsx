@@ -12,7 +12,7 @@ export default function Header() {
   return (
     <header className='p-4 flex justify-between items-center'>
       <Link href='/'>
-        <h1 className='font-bold text-2xl'>Name of site</h1>
+        <h1 className='font-bold text-2xl'>Discover Norwich</h1>
       </Link>
       <div>
         <SignedOut>
