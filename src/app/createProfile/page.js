@@ -1,5 +1,6 @@
 import { currentUser } from '@clerk/nextjs/server';
 import { createuser } from '@/utils/actions';
+import { redirect } from 'next/navigation';
 
 const CreateProfile = async () => {
   const user = await currentUser(); // Craig's hint
