@@ -6,6 +6,10 @@ const CreateProfile = async () => {
 
   console.log({ user });
 
+  if (!user) {
+    redirect('/sign-in');
+  }
+
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-100'>
       <form
@@ -17,7 +21,7 @@ const CreateProfile = async () => {
         </h2>
         {/* [id, firstName, lastName, username, location, bio, userImgUrl] */}
         {/* Not sure about this*/}
-        <input type='hidden' name='clerk_id' value={user?.id} />
+        <input type='hidden' name='clerk_id' value={user.id} />
 
         {/* First name */}
         <div className='mb-4'>
