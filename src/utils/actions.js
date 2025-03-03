@@ -18,6 +18,5 @@ export const createuser = async (formData) => {
     [id, firstName, lastName, username, location, bio, userImg]
   );
 
-  revalidatePath(`/user-profile/${username}`);
   redirect(`/user-profile/${username}`);
 };
