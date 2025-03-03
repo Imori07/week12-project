@@ -1,31 +1,21 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
-import { NextResponse } from 'next/server';
 
-const isProtectedRoute = createRouteMatcher(['/(.*)']);
-const isPublicRoute = createRouteMatcher(['/sign-in', '/sign-up']);
+//we will use this to determine which paths are public and which paths are protected
+//find a match for the route user-profile and any nested route inside too
+//we are focusing on finding matches for protected routes
+const isProtectedRoute = createRouteMatcher(['/user-profile(.*)']);
 
 export default clerkMiddleware(async (auth, req) => {
-  if (isPublicRoute(req)) {
-    return NextResponse.next(); // Allow access to sign-in and sign-up pages
-  }
-
-  if (isProtectedRoute(req)) {
-    try {
-      await auth.protect(); // Protect other routes
-      return NextResponse.next();
-    } catch (error) {
-      //auth.protect() throws an error when not authenticated, so we redirect to sign in here.
-      const signInUrl = new URL('/sign-in', req.url);
-      signInUrl.searchParams.set('redirect_url', req.url);
-      return NextResponse.redirect(signInUrl);
-    }
-  }
-  return NextResponse.next();
+  //we will specific that we want ot protect certain paths
+  //if the request comes from a protected route, trigger the authentication flow
+  if (isProtectedRoute(req)) await auth.protect();
 });
 
 export const config = {
   matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
     '/(api|trpc)(.*)',
   ],
 };

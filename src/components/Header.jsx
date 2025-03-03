@@ -17,10 +17,14 @@ export default function Header() {
       <div>
         <SignedOut>
           <SignInButton>
-            <button className='m-2'>Sign in</button>
+            <button className='bg-black text-white rounded-md m-2 p-1'>
+              Sign in
+            </button>
           </SignInButton>
           <SignUpButton>
-            <button className='m-2'>Sign Up</button>
+            <button className='bg-black text-white rounded-md m-2 p-1'>
+              Sign Up
+            </button>
           </SignUpButton>
         </SignedOut>
         <SignedIn>
