@@ -11,7 +11,12 @@ export default async function UserPage({ params }) {
 
   return (
     <div>
-      <h1>{user.first_name}</h1>
+      <h1>
+        {user.first_name} {user.last_name}
+      </h1>
+      <img src={user.user_img} width={100} />
+      <p>bio: {user.bio}</p>
+      <p>location: {user.location}</p>
     </div>
   );
 }

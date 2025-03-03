@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <header>
+    <header className='p-4 flex justify-between items-center'>
       <Link href='/'>
         <h1 className='font-bold text-2xl'>Name of site</h1>
       </Link>
@@ -27,7 +27,7 @@ export default function Header() {
           <div className='flex items-center'>
             <Link
               href='/new-post'
-              className='text-white m-3 p-2 flex items-center rounded-xl bg-slate-600 hover:bg-slate-700'
+              className='text-white m-3 p-1 flex items-center rounded-xl bg-slate-600 hover:bg-slate-700'
             >
               <FaPlus className='mr-1' />
               <span>Create</span>
