@@ -26,7 +26,7 @@ export default function Header() {
         <SignedIn>
           <div className='flex items-center'>
             <Link
-              href='/new-post'
+              href='/createPost'
               className='text-white m-3 p-1 flex items-center rounded-xl bg-slate-600 hover:bg-slate-700'
             >
               <FaPlus className='mr-1' />
