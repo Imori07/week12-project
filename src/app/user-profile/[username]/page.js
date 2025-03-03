@@ -1,11 +1,19 @@
 import { fetchUser } from '@/utils/api';
 import { notFound } from 'next/navigation';
 
-export default async function UserPage({ params }) {
+export const generateMetadata = async ({ params }) => {
   const { username } = await params;
   const user = await fetchUser(username);
 
-  console.log(user);
+  return {
+    title: `${user.first_name} ${user.last_name}-(${user.username})`,
+    description: `Viewing ${user.first_name} ${user.last_name}'s profile page.`,
+  };
+};
+
+export default async function UserPage({ params }) {
+  const { username } = await params;
+  const user = await fetchUser(username);
 
   if (!user) notFound();
 
