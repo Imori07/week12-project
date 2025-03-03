@@ -3,9 +3,11 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import BusinessLink from "@/components/BusinessLink";
 
 
 export default async function BusinessPage({ params }) {
+  
   const mapsKey = process.env.MAPS_API_KEY;
   const BusinessParams = await params;
   const businessdata = await db.query(
@@ -18,6 +20,7 @@ JOIN menu ON menu.id = business.menu_id WHERE business.id = $1 `,
 
 
   return (
+
     <div className="flex flex-col items-center gap-4 w-full bg-white m-6">
       {wrangleData.map((data) => (
         <div key={data.id}>
@@ -33,7 +36,9 @@ JOIN menu ON menu.id = business.menu_id WHERE business.id = $1 `,
           <p className="text-black font-bold">{data.business_address}</p>
         </div>
       ))}
-
+<BusinessLink   
+mapsKey={mapsKey}
+placeId={wrangleData[0].business_placeid}/>
     </div>
   );
 }
