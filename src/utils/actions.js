@@ -1,6 +1,7 @@
 'use server';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { auth } from '@clerk/nextjs/server';
 import { db } from './dbConnection';
 
 export const createuser = async (formData) => {
@@ -19,4 +20,31 @@ export const createuser = async (formData) => {
   );
 
   redirect(`/user-profile/${username}`);
+};
+
+export const updateUserProfile = async (formData) => {
+  const { userId } = await auth();
+  if (!userId) throw new Error('Unauthorized: No user ID found.');
+
+  const postId = formData.get('id');
+  const title = formData.get('title');
+  const description = formData.get('content');
+  const image = formData.get('image');
+
+  const result = await db.query(
+    `
+    UPDATE user_posts
+    SET title = $1, description = $2, image = $3
+    WHERE id = $4 AND user_id = (SELECT id FROM users WHERE clerk_id = $5)
+    RETURNING *
+    `,
+    [title, description, image, postId, userId]
+  );
+
+  if (result.rowCount === 0) {
+    throw new Error('Unauthorized: Post not found or user mismatch.');
+  }
+
+  revalidatePath(`/posts`);
+  redirect(`/posts`);
 };
