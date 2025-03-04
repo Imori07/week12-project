@@ -109,7 +109,7 @@ const CreateProfile = async () => {
         {/* Submit Button */}
         <SubmitButton
           text='Submit'
-          classNames='w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition'
+          classNames='w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition disabled:bg-blue-600'
         />
       </form>
     </div>

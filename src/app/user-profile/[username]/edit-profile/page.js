@@ -69,7 +69,7 @@ const EditProfilePage = async ({ params }) => {
           </Link>
           <SubmitButton
             text='Submit'
-            classNames='w-3/4 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition'
+            classNames='w-3/4 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition disabled:bg-blue-600'
           />
         </div>
       </form>
