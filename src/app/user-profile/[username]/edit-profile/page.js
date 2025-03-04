@@ -4,6 +4,16 @@ import { updateUserProfile } from '@/utils/actions';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
+export const generateMetadata = async ({ params }) => {
+  const { username } = await params;
+  const user = await fetchUser(username);
+
+  return {
+    title: `Edit Profile - ${user.username}`,
+    description: `Edit page for ${user.first_name} ${user.last_name}'s profile page.`,
+  };
+};
+
 const EditProfilePage = async ({ params }) => {
   const { username } = params;
   const user = await currentUser();
