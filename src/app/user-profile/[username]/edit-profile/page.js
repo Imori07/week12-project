@@ -1,9 +1,16 @@
 import { currentUser } from '@clerk/nextjs/server';
-
+import { fetchUser } from '@/utils/api';
 import { updateUserProfile } from '@/utils/actions';
+import { redirect } from 'next/navigation';
 
-const EditProfilePage = () => {
-  const user = currentUser();
+const EditProfilePage = async ({ params }) => {
+  const user = await currentUser();
+  const dbUser = await fetchUser(params.username);
+
+  if (!user || !dbUser || user.id !== dbUser.clerk_id) {
+    redirect('/');
+  }
+
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-100'>
       <form
@@ -14,44 +21,6 @@ const EditProfilePage = () => {
           Edit Your Profile
         </h2>
         <input type='hidden' name='clerk_id' value={user.id} />
-        <div className='mb-4'>
-          <label className='block text-sm font-semibold text-gray-700'>
-            First Name
-          </label>
-          <input
-            type='text'
-            name='first_name'
-            placeholder='Enter your first name'
-            className='w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500'
-            required
-          />
-        </div>
-
-        <div className='mb-4'>
-          <label className='block text-sm font-semibold text-gray-700'>
-            Last Name
-          </label>
-          <input
-            type='text'
-            name='last_name'
-            placeholder='Enter your last name'
-            className='w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500'
-            required
-          />
-        </div>
-
-        <div className='mb-4'>
-          <label className='block text-sm font-semibold text-gray-700'>
-            Location
-          </label>
-          <input
-            type='text'
-            name='location'
-            placeholder='Enter your location'
-            className='w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500'
-            required
-          />
-        </div>
 
         <div className='mb-4'>
           <label className='block text-sm font-semibold text-gray-700'>
@@ -59,6 +28,7 @@ const EditProfilePage = () => {
           </label>
           <textarea
             name='bio'
+            defaultValue={dbUser.bio}
             placeholder='Tell us about yourself...'
             className='w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500'
             required
@@ -72,6 +42,7 @@ const EditProfilePage = () => {
           <input
             type='text'
             name='user_img'
+            defaultValue={dbUser.user_img}
             className='w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500'
           />
         </div>

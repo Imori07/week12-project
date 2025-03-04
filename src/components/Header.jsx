@@ -47,7 +47,7 @@ export default async function Header() {
         <SignedIn>
           <div className='flex items-center'>
             <Link
-              href={`user-profile/${userdata?.username}`}
+              href={`/user-profile/${userdata?.username}`}
               className='text-white m-3 p-1 flex items-center rounded-xl bg-slate-600 hover:bg-slate-700'
             >
               Profile

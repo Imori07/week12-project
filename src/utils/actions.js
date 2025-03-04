@@ -26,25 +26,24 @@ export const updateUserProfile = async (formData) => {
   const { userId } = await auth();
   if (!userId) throw new Error('Unauthorized: No user ID found.');
 
-  const postId = formData.get('id');
-  const title = formData.get('title');
-  const description = formData.get('content');
-  const image = formData.get('image');
+  const clerkId = formData.get('clerk_id');
+  const bio = formData.get('bio');
+  const image = formData.get('user_img');
 
   const result = await db.query(
-    `
-    UPDATE user_posts
-    SET title = $1, description = $2, image = $3
-    WHERE id = $4 AND user_id = (SELECT id FROM users WHERE clerk_id = $5)
-    RETURNING *
+    `UPDATE users
+    SET bio = $1, user_img = $2
+    WHERE clerk_id = $3
+    RETURNING username
     `,
-    [title, description, image, postId, userId]
+    [bio, image, clerkId]
   );
 
   if (result.rowCount === 0) {
-    throw new Error('Unauthorized: Post not found or user mismatch.');
+    throw new Error('Unauthorized: User mismatch.');
   }
 
-  revalidatePath(`/posts`);
-  redirect(`/posts`);
+  const { username } = result.rows[0];
+  revalidatePath(`/user-profile/${username}`);
+  redirect(`/user-profile/${username}`);
 };
