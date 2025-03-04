@@ -2,10 +2,12 @@ import { currentUser } from '@clerk/nextjs/server';
 import { fetchUser } from '@/utils/api';
 import { updateUserProfile } from '@/utils/actions';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 const EditProfilePage = async ({ params }) => {
+  const { username } = await params;
   const user = await currentUser();
-  const dbUser = await fetchUser(params.username);
+  const dbUser = await fetchUser(username);
 
   if (!user || !dbUser || user.id !== dbUser.clerk_id) {
     redirect('/');
@@ -13,6 +15,12 @@ const EditProfilePage = async ({ params }) => {
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-100'>
+      <Link
+        href={`/user-profile/${username}`}
+        className='text-blue-500 hover:underline mb-4 block'
+      >
+        ← Back
+      </Link>
       <form
         action={updateUserProfile}
         className='bg-white shadow-lg rounded-lg p-6 w-full max-w-lg'
