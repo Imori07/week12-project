@@ -3,6 +3,7 @@ import { fetchUser } from '@/utils/api';
 import { updateUserProfile } from '@/utils/actions';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import SubmitButton from '@/components/SubmitButton';
 
 export const generateMetadata = async ({ params }) => {
   const { username } = await params;
@@ -66,12 +67,10 @@ const EditProfilePage = async ({ params }) => {
           >
             ← Back
           </Link>
-          <button
-            type='submit'
-            className='w-3/4 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition'
-          >
-            Submit
-          </button>
+          <SubmitButton
+            text='Submit'
+            classNames='w-3/4 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition'
+          />
         </div>
       </form>
     </div>

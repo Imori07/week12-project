@@ -1,6 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server';
 import { createuser } from '@/utils/actions';
 import { redirect } from 'next/navigation';
+import SubmitButton from '@/components/SubmitButton';
 
 const CreateProfile = async () => {
   const user = await currentUser(); // Craig's hint
@@ -106,12 +107,10 @@ const CreateProfile = async () => {
         </div>
 
         {/* Submit Button */}
-        <button
-          type='submit'
-          className='w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition'
-        >
-          Submit
-        </button>
+        <SubmitButton
+          text='Submit'
+          classNames='w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition'
+        />
       </form>
     </div>
   );
