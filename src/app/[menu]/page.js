@@ -1,6 +1,9 @@
+
 import { db } from '@/utils/dbConnection';
 import Link from 'next/link';
 import Image from 'next/image';
+
+
 
 export default async function MenuPage({ params }) {
   console.log('params in whole are', await params);
@@ -18,13 +21,18 @@ export default async function MenuPage({ params }) {
   const wrangleData = business.rows;
   console.log(wrangleData);
 
+ 
+
   return (
+    <>
+
     <div className='h-auto m-6 mb-50 bg-white'>
       <h1 className='items-center text-center capitalize text-black text-[40px] font-bold'>
         {menuparams}
       </h1>
-
       <div>
+  
+      
         <div className='bg-white flex flex-row overflow-scroll'>
           {wrangleData.length > 0 ? '' : 'Sorry! There is no Business to show'}
           {wrangleData.map((data) => (
@@ -54,5 +62,7 @@ export default async function MenuPage({ params }) {
         </div>
       </div>
     </div>
-  );
+    </>
+    );
+
 }
