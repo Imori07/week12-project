@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
 const EditProfilePage = async ({ params }) => {
-  const { username } = await params;
+  const { username } = params;
   const user = await currentUser();
   const dbUser = await fetchUser(username);
 
@@ -15,12 +15,6 @@ const EditProfilePage = async ({ params }) => {
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-100'>
-      <Link
-        href={`/user-profile/${username}`}
-        className='text-blue-500 hover:underline mb-4 block'
-      >
-        ← Back
-      </Link>
       <form
         action={updateUserProfile}
         className='bg-white shadow-lg rounded-lg p-6 w-full max-w-lg'
@@ -55,12 +49,20 @@ const EditProfilePage = async ({ params }) => {
           />
         </div>
 
-        <button
-          type='submit'
-          className='w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition'
-        >
-          Submit
-        </button>
+        <div className='flex gap-2 mt-4'>
+          <Link
+            href={`/user-profile/${username}`}
+            className='w-1/4 p-2 rounded-md bg-gray-600 text-white text-center font-bold hover:bg-gray-700 transition'
+          >
+            ← Back
+          </Link>
+          <button
+            type='submit'
+            className='w-3/4 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition'
+          >
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );
