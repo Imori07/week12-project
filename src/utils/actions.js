@@ -1,6 +1,7 @@
 'use server';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { auth } from '@clerk/nextjs/server';
 import { db } from './dbConnection';
 
 export const createuser = async (formData) => {
@@ -18,5 +19,31 @@ export const createuser = async (formData) => {
     [id, firstName, lastName, username, location, bio, userImg]
   );
 
+  redirect(`/user-profile/${username}`);
+};
+
+export const updateUserProfile = async (formData) => {
+  const { userId } = await auth();
+  if (!userId) throw new Error('Unauthorized: No user ID found.');
+
+  const clerkId = formData.get('clerk_id');
+  const bio = formData.get('bio');
+  const image = formData.get('user_img');
+
+  const result = await db.query(
+    `UPDATE users
+    SET bio = $1, user_img = $2
+    WHERE clerk_id = $3
+    RETURNING username
+    `,
+    [bio, image, clerkId]
+  );
+
+  if (result.rowCount === 0) {
+    throw new Error('Unauthorized: User mismatch.');
+  }
+
+  const { username } = result.rows[0];
+  revalidatePath(`/user-profile/${username}`);
   redirect(`/user-profile/${username}`);
 };
