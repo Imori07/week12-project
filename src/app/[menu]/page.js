@@ -53,7 +53,7 @@ export default async function MenuPage({ params }) {
               <h1 className='text-gray-800 bg-white'>{data.business_name}</h1>
               <Link
                 className='text-gray-800 text-center text-sm bg-white p-3 m-3 hover:bg-yellow-500 hover:scale-105 hover:brightness-110'
-                href={`/foods/${data.id}`}
+                href={`/${menuparams}/${data.id}`}
               >
                 Discover More!
               </Link>

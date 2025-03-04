@@ -15,6 +15,12 @@ JOIN menu ON menu.id = business.menu_id WHERE business.id = $1 `,
   );
   console.log(businessdata);
   const wrangleData = businessdata.rows;
+  const commentdata = await db.query(
+    `SELECT reviews.id, reviews.username, reviews.comment,reviews.updated_at,reviews.business_id,reviews.user_id FROM reviews  
+      JOIN business on business.id = reviews.business_id WHERE business.id = $1 order by reviews.updated_at desc `,
+    [BusinessParams.id]
+  );
+  console.log(commentdata);
 
   return (
     <div className="flex flex-col items-center gap-4 w-full bg-white m-6">
@@ -30,16 +36,13 @@ JOIN menu ON menu.id = business.menu_id WHERE business.id = $1 `,
           />
           <h1 className="text-black font-bold">{data.business_name}</h1>
           <p className="text-black font-bold">{data.business_address}</p>
-          <Link href={`/CreateReviews/${data.id}`}>
-            <button className="bg-blue-600 m-2  hover:bg-blue-800 text-white font-bold py-2 px-4 ">
-              New comment
-            </button>
-          </Link>
         </div>
       ))}
       <BusinessLink
         mapsKey={mapsKey}
         placeId={wrangleData[0].business_placeid}
+        businessId={wrangleData[0].id}
+        commentdata={commentdata.rows}
       />
     </div>
   );

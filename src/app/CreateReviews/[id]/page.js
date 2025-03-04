@@ -65,7 +65,7 @@ export default async function CreateNewPage ({ params }) {
             <p className="text-black font-bold">{data.business_address}</p>
           </div>
         ))}
-        <div className="w-[500px]  bg-orange-100 shadow-lg rounded-lg p-10 mt-6 ">
+        <div className="w-[500px] bg-amber-50 shadow-lg rounded-lg p-10 mt-6 ">
           <form
             action={handleSubmit}
             className="flex flex-col items-center gap-4"
@@ -78,7 +78,7 @@ export default async function CreateNewPage ({ params }) {
               type="username"
               name="username"
               id="username"
-              className="text-amber-800  bg-orange-200"
+              className="text-amber-800  bg-amber-200"
               defaultValue={onedata.username}
               required
             />
@@ -88,14 +88,14 @@ export default async function CreateNewPage ({ params }) {
             <textarea
               id="comment"
               name="comment"
-              className="text-amber-800 rounded-xl bg-orange-200"
+              className="text-amber-800 rounded-xl bg-amber-200"
               rows="4"
               cols="40"
               required
             />
             <button
               type="submit"
-              className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded-full"
+              className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded-lg"
             >
               Submit data
             </button>

@@ -13,7 +13,7 @@ const FooterCard = ({ link }) => (
   <Link
     href={link.href}
     className="flex flex-col items-center text-black justify-center w-full p-2 transition-all duration-300 
-               transform hover:scale-110 hover:text-yellow-300"
+               transform hover:scale-110 hover:text-amber-500"
   >
     {link.icon}
     {/* <span className="text-sm font-medium mt-1">{link.label}</span> */}
