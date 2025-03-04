@@ -5,7 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 
 
-export default async function BusinessPage({ params }) {
+
+export default async function BusinessPage({ params }) { 
   const mapsKey = process.env.MAPS_API_KEY;
   const BusinessParams = await params;
   const businessdata = await db.query(
@@ -18,6 +19,7 @@ JOIN menu ON menu.id = business.menu_id WHERE business.id = $1 `,
 
 
   return (
+
     <div className="flex flex-col items-center gap-4 w-full bg-white m-6">
       {wrangleData.map((data) => (
         <div key={data.id}>
@@ -31,6 +33,11 @@ JOIN menu ON menu.id = business.menu_id WHERE business.id = $1 `,
           />
           <h1 className="text-black font-bold">{data.business_name}</h1>
           <p className="text-black font-bold">{data.business_address}</p>
+          <Link href={`/CreateReviews/${data.id}`}>
+          <button className="bg-blue-600 m-2  hover:bg-blue-800 text-white font-bold py-2 px-4 ">
+            New comment
+          </button>
+        </Link>
         </div>
       ))}
 
