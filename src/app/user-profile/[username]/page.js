@@ -14,6 +14,7 @@ export const generateMetadata = async ({ params }) => {
 export default async function UserPage({ params }) {
   const { username } = await params;
   const user = await fetchUser(username);
+  console.log('user', user);
 
   if (!user) notFound();
 
