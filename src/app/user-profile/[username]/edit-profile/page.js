@@ -1,17 +1,9 @@
-<<<<<<< HEAD
 import { currentUser } from '@clerk/nextjs/server';
 import { fetchUser } from '@/utils/api';
 import { updateUserProfile } from '@/utils/actions';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import SubmitButton from '@/components/SubmitButton';
-=======
-import { currentUser } from "@clerk/nextjs/server";
-import { fetchUser } from "@/utils/api";
-import { updateUserProfile } from "@/utils/actions";
-import { redirect } from "next/navigation";
-import Link from "next/link";
->>>>>>> ae7a9be (Profile page style using external css file)
 
 export const generateMetadata = async ({ params }) => {
   const { username } = await params;
@@ -75,19 +67,10 @@ const EditProfilePage = async ({ params }) => {
           >
             ← Back
           </Link>
-<<<<<<< HEAD
           <SubmitButton
             text='Submit'
             classNames='w-3/4 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition disabled:bg-blue-600'
           />
-=======
-          <button
-            type="submit"
-            className="w-3/4 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition"
-          >
-            Submit
-          </button>
->>>>>>> ae7a9be (Profile page style using external css file)
         </div>
       </form>
     </div>

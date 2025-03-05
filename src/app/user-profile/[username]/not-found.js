@@ -14,7 +14,7 @@ export default function UserNotFound() {
           Oops! This Norwich Explorer is Missing 🕵️‍♂️
         </h1>
         <p className="text-lg text-gray-700 mb-6">
-          The user you're looking for isn't here. Maybe they've wandered off to
+          The user you are looking for is not here. Maybe they have wandered off to
           explore the hidden gems of Norwich!
         </p>
         {/* <Link href="/users/">
