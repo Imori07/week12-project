@@ -1,9 +1,9 @@
-import { fetchUser } from "@/utils/api";
+import { fetchUser, fetchUserComments } from "@/utils/api"; // Fetch user & comments
 import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaUserEdit } from "react-icons/fa";
-import "@/styles/user-profile.css"; // I decided to do it in separate style file
+import "@/styles/user-profile.css"; // External CSS file
 
 export const generateMetadata = async ({ params }) => {
   const { username } = params;
@@ -14,12 +14,13 @@ export const generateMetadata = async ({ params }) => {
     description: `Viewing ${user.first_name} ${user.last_name}'s profile page.`,
   };
 };
-//comment
+
 export default async function UserPage({ params }) {
   const { username } = params;
   const user = await fetchUser(username);
   const signedInUser = await currentUser();
-
+  const comments = await fetchUserComments(username); // Fetch user comments
+  console.log(comments);
   if (!user) notFound();
 
   return (
@@ -58,6 +59,25 @@ export default async function UserPage({ params }) {
             </Link>
           </div>
         )}
+
+        {/* Comments Section */}
+        <div className="user-comments">
+          <h2 className="comments-title">Your Comments</h2>
+          {comments.length > 0 ? (
+            <ul className="comments-list">
+              {comments.map((comment) => (
+                <li key={comment.id} className="comment-item">
+                  <p className="comment-text">{comment.comment}</p>
+                  <span className="comment-date">
+                    {new Date(comment.created_at).toLocaleString()}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="no-comments">This user hasn't commented yet.</p>
+          )}
+        </div>
       </div>
     </div>
   );
