@@ -1,12 +1,12 @@
-import { currentUser } from '@clerk/nextjs/server';
-import { fetchUser } from '@/utils/api';
-import { updateUserProfile } from '@/utils/actions';
-import { redirect } from 'next/navigation';
-import Link from 'next/link';
-import SubmitButton from '@/components/SubmitButton';
+import { currentUser } from "@clerk/nextjs/server";
+import { fetchUser } from "@/utils/api";
+import { updateUserProfile } from "@/utils/actions";
+import { redirect } from "next/navigation";
+import Link from "next/link";
+import SubmitButton from "@/components/SubmitButton";
 
 export const generateMetadata = async ({ params }) => {
-  const { username } = await params;
+  const { username } = params;
   const user = await fetchUser(username);
 
   return {
@@ -25,10 +25,17 @@ const EditProfilePage = async ({ params }) => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div
+      className="min-h-screen flex items-center justify-center bg-cover bg-center p-6"
+      style={{
+        //Norwich background added
+        backgroundImage:
+          "url('https://nationalcentreforwriting.org.uk/wp-content/uploads/2023/06/UNESCO-Elm-Hill-Norwich-Cathedral-Quarter-c-VisitNorwich-1.jpg')",
+      }}
+    >
       <form
         action={updateUserProfile}
-        className="bg-white shadow-lg rounded-lg p-6 w-full max-w-lg"
+        className="bg-white bg-opacity-90 shadow-lg rounded-lg p-6 w-full max-w-lg"
       >
         <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">
           Edit Your Profile
@@ -68,8 +75,8 @@ const EditProfilePage = async ({ params }) => {
             ← Back
           </Link>
           <SubmitButton
-            text='Submit'
-            classNames='w-3/4 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition disabled:bg-blue-600'
+            text="Submit"
+            classNames="w-3/4 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition disabled:bg-blue-600"
           />
         </div>
       </form>
