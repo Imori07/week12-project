@@ -14,7 +14,7 @@ export const generateMetadata = async ({ params }) => {
     description: `Viewing ${user.first_name} ${user.last_name}'s profile page.`,
   };
 };
-
+//comment
 export default async function UserPage({ params }) {
   const { username } = params;
   const user = await fetchUser(username);
