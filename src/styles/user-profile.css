@@ -1,0 +1,74 @@
+.user-profile-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  padding: 1.5rem;
+  background-image: url("https://cdn.visitnorwich.co.uk/app/uploads/2021/05/230810-WARNER-VISIT-NORWICH-R51_1462-NORWICH-MARKET-scaled.jpg");
+}
+
+.user-profile-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 42rem;
+  width: 100%;
+  text-align: center;
+}
+
+.user-avatar {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  border: 4px solid #3b82f6;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.user-name {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-top: 1rem;
+}
+
+.user-username {
+  font-size: 1.125rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.user-info {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.edit-profile-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2563eb;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 1.5rem;
+}
+
+.edit-profile-button:hover {
+  background-color: #1e40af;
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.edit-profile-icon {
+  font-size: 1.25rem;
+  margin-left: 0.5rem;
+}
