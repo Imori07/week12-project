@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 export default function Location({mapsKey}) {
     const [location, setLocation] = useState(null);
-    
+    useEffect(() => {
     const getUserLocation = () => {
+  
         return new Promise((resolve) => {
           navigator.geolocation.getCurrentPosition((position) =>
             resolve(position.coords)
@@ -15,6 +16,8 @@ export default function Location({mapsKey}) {
         setLocation({ latitude, longitude });
       };
       fetchData();
+    }, []);
+      
       
   return(
     <>

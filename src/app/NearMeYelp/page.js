@@ -53,7 +53,14 @@ export default function NearbyRestaurants() {
       ) : (
         <p>Fetching location...</p>
       )}
+          <Link
+            href={"/NearMeYelp"}
+            className=" p-2 rounded-md bg-gray-600 text-white text-center font-bold hover:bg-gray-700 transition"
+          >
+            ← Back
+          </Link>
       </div>
+  
      <div className='bg-white flex flex-row overflow-scroll'>
  
         {restaurants.map((restaurant) => (
@@ -72,7 +79,14 @@ export default function NearbyRestaurants() {
                   unoptimized="true"
               />
             ) : (
-              <p>No image available</p>
+              <img
+              className='h-full w-full object-cover'
+                src={"https://as1.ftcdn.net/v2/jpg/04/62/93/66/1000_F_462936689_BpEEcxfgMuYPfTaIAOC1tCDurmsno7Sp.jpg"}
+                alt={"no image"}
+                width={250}
+                  height={250}
+                  unoptimized="true"
+              />
             )}
             </div>
             <p className="text-black font-bold">{restaurant.name}</p>
@@ -86,8 +100,12 @@ export default function NearbyRestaurants() {
             </p>
         
           </div>
+          
         ))}
-     </div>       
+  
+     </div>     
+  
+
 
 
       </div>

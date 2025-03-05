@@ -62,6 +62,12 @@ export default async function MenuPage({ params }) {
         </div>
       </div>
     </div>
+    <Link
+            href={"/"}
+            className="w-1/4 p-2 rounded-md bg-gray-600 text-white text-center font-bold hover:bg-gray-700 transition"
+          >
+            ← Back
+          </Link>
     </>
     );
 

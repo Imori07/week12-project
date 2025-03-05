@@ -6,10 +6,11 @@ import Image from "next/image";
 import BusinessLink from "@/components/BusinessLink";
 
 export default async function BusinessPage({ params }) {
+
   const mapsKey = process.env.MAPS_API_KEY;
   const BusinessParams = await params;
   const businessdata = await db.query(
-    `SELECT business.id, business.business_name, business.business_address, business.business_img, business.business_type,business.business_placeid, business.menu_id FROM business
+    `SELECT business.id, business.business_name, business.business_address, business.business_img, business.business_type,business.business_placeid, business.menu_id,menu.title_name FROM business
 JOIN menu ON menu.id = business.menu_id WHERE business.id = $1 `,
     [BusinessParams.id]
   );
@@ -21,6 +22,7 @@ JOIN menu ON menu.id = business.menu_id WHERE business.id = $1 `,
     [BusinessParams.id]
   );
   console.log(commentdata);
+
 
   return (
     <div className="flex flex-col items-center gap-4 w-full bg-white m-6">
@@ -44,6 +46,12 @@ JOIN menu ON menu.id = business.menu_id WHERE business.id = $1 `,
         businessId={wrangleData[0].id}
         commentdata={commentdata.rows}
       />
+        <Link
+            href={`/${wrangleData[0].title_name}`}
+            className="w-1/4 p-2 rounded-md bg-gray-600 text-white text-center font-bold hover:bg-gray-700 transition"
+          >
+            ← Back
+          </Link>
     </div>
   );
 }

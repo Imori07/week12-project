@@ -7,7 +7,7 @@ const footerLinks = [
   { label: "Home", href: "/", icon: <Home size={40} /> },
   { label: "Add", href: "/suggest", icon: <CirclePlus size={40} /> },
   { label: "NearMe", href: "/NearMeYelp", icon: <MapPinned size={40} /> },
-  { label: "Profile", href: "/createProfile", icon: <CircleUser size={40} /> },
+
 ];
 
 const FooterCard = ({ link }) => (
