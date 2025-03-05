@@ -1,0 +1,96 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+
+
+export default function NearbyRestaurants() {
+  const mapsKey = process.env.MAPS_API_KEY;
+  const [location, setLocation] = useState(null);
+  const [restaurants, setRestaurants] = useState([]);
+
+  useEffect(() => {
+    const fetchRestaurants = async (latitude, longitude) => {
+      const res = await fetch(
+        `/api/yelp?latitude=${latitude}&longitude=${longitude}`
+      );
+      const data = await res.json();
+
+      if (res.ok) {
+        setRestaurants(data.businesses || []);
+      }
+    };
+
+    const getUserLocation = () => {
+      return new Promise((resolve) => {
+        navigator.geolocation.getCurrentPosition((position) =>
+          resolve(position.coords)
+        );
+      });
+    };
+
+    const fetchData = async () => {
+      const { latitude, longitude } = await getUserLocation();
+      setLocation({ latitude, longitude });
+      await fetchRestaurants(latitude, longitude);
+    };
+
+    fetchData();
+  }, []);
+
+ 
+  return (
+    <div>
+
+  <div className="flex flex-col items-center gap-4 w-full bg-white m-6">
+     
+   <Link href = "/NearMeMap" className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105">See the map</Link>
+   <h2 className='items-center text-center capitalize text-black text-[40px] font-bold'>Nearby Restaurants</h2>
+      {location ? (
+         <p className='text-xl'>
+         <strong>Your Location is </strong>: {location.latitude}, {location.longitude}
+        </p>
+      ) : (
+        <p>Fetching location...</p>
+      )}
+      </div>
+     <div className='bg-white flex flex-row overflow-scroll'>
+ 
+        {restaurants.map((restaurant) => (
+          <div
+            key={restaurant.id}
+           
+>
+<div className='w-[250px] h-[250px]'>
+{restaurant.image_url && restaurant.image_url !== '' ? (
+              <img
+              className='h-full w-full object-cover'
+                src={restaurant.image_url}
+                alt={restaurant.name}
+                width={250}
+                  height={250}
+                  unoptimized="true"
+              />
+            ) : (
+              <p>No image available</p>
+            )}
+            </div>
+            <p className="text-black font-bold">{restaurant.name}</p>
+            <p className="text-black font-bold">Rating: {restaurant.rating}</p>
+            <p className="text-black font-bold">Address: {restaurant.location?.address1}</p>
+            <p className="text-black font-bold">
+              Category:{' '}
+              {restaurant.categories
+                ?.map((category) => category.title)
+                .join(', ')}
+            </p>
+        
+          </div>
+        ))}
+     </div>       
+
+
+      </div>
+  
+  );
+}
