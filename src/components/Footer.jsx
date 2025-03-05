@@ -2,17 +2,18 @@
 import { Home, CirclePlus, CircleUser,MapPinned } from "lucide-react";
 import Link from "next/link";
 
+
 const footerLinks = [
   { label: "Home", href: "/", icon: <Home size={40} /> },
-  { label: "Add", href: "/", icon: <CirclePlus size={40} /> },
-  { label: "NearMe", href: "/", icon: <MapPinned size={40} /> },
- 
+  { label: "Add", href: "/suggest", icon: <CirclePlus size={40} /> },
+  { label: "NearMe", href: "/NearMeYelp", icon: <MapPinned size={40} /> },
+  { label: "Profile", href: "/createProfile", icon: <CircleUser size={40} /> },
 ];
 
 const FooterCard = ({ link }) => (
   <Link
     href={link.href}
-    className="flex flex-col items-center text-black justify-center w-full p-2 transition-all duration-300 
+    className="flex flex-col items-center text-black justify-center w-full p-2 transition-all duration-300
                transform hover:scale-110 hover:text-amber-500"
   >
     {link.icon}
