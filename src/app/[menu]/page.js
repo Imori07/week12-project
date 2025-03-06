@@ -1,10 +1,7 @@
-
 import { db } from '@/utils/dbConnection';
 import Link from 'next/link';
 import Image from 'next/image';
 import BusinessFilter from '@/components/businessfilter';
-
-
 
 export default async function MenuPage({ params }) {
   console.log('params in whole are', await params);
@@ -21,74 +18,78 @@ export default async function MenuPage({ params }) {
   console.log('all business results', business);
   const wrangleData = business.rows;
 
+  const BusinessCafe = await db.query(
+    `select * from business where business_type = $1`,
+    ['Cafe']
+  );
 
-  const BusinessCafe = await db.query(`select * from business where business_type = $1`, [
-    "Cafe",
-  ]);
+  const BusinessBars = await db.query(
+    `select * from business where business_type = $1`,
+    ['Bars']
+  );
 
-const BusinessBars = await db.query(`select * from business where business_type = $1`, [
-  "Bars",
-]);
-
-const BusinessRestaurant = await db.query(`select * from business where business_type = $1`, [
-  "Restaurant",
-]);
-
- 
+  const BusinessRestaurant = await db.query(
+    `select * from business where business_type = $1`,
+    ['Restaurant']
+  );
 
   return (
     <>
-
-    <div className='h-auto m-6 mb-50 bg-white'>
-      <h1 className='items-center text-center capitalize text-black text-[40px] font-bold'>
-        {menuparams}
-      </h1>
-      <div>
-    
-   {menuparams ==="foods" &&  <BusinessFilter 
-      businessId={business.rows}
-      cafe = {BusinessCafe.rows}
-      Restaurant = {BusinessRestaurant.rows}
-      Bars ={BusinessBars.rows}
-      />}  
-{menuparams  != "foods" && <div className='bg-white flex flex-row overflow-scroll'>
-          {wrangleData.length > 0 ? '' : 'Sorry! There is no Business to show'}
-          {wrangleData.map((data) => (
-            <div
-              className='flex flex-col items-center gap-4 m-6 p-6 bg-gray-100'
-              key={data.id}
-            >
-              <div className='w-[250px] h-[250px]'>
-                <Image
-                  className='h-full w-full object-cover'
-                  src={data.business_img}
-                  alt='Business'
-                  width={250}
-                  height={250}
-                  unoptimized
-                />
-              </div>
-              <h1 className='text-gray-800 bg-white'>{data.business_name}</h1>
-              <Link
-                className='text-gray-800 text-center text-sm bg-white p-3 m-3 hover:bg-yellow-500 hover:scale-105 hover:brightness-110'
-                href={`/${menuparams}/${data.id}`}
-              >
-                Discover More!
-              </Link>
+      <div className='h-auto m-6 mb-50 bg-white'>
+        <h1 className='items-center text-center capitalize text-black text-[40px] font-bold'>
+          {menuparams}
+        </h1>
+        <div>
+          {menuparams === 'foods' && (
+            <BusinessFilter
+              businessId={business.rows}
+              cafe={BusinessCafe.rows}
+              Restaurant={BusinessRestaurant.rows}
+              Bars={BusinessBars.rows}
+            />
+          )}
+          {menuparams != 'foods' && (
+            <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+              {wrangleData.length === 0 ? (
+                <p>Sorry! There is no Business to show</p>
+              ) : (
+                wrangleData.map((data) => (
+                  <div
+                    className='flex flex-col items-center gap-4 m-6 p-8 bg-gray-100 rounded-md'
+                    key={data.id}
+                  >
+                    <div className='w-[250px] h-[250px]'>
+                      <Image
+                        className='h-full w-full object-cover rounded-md'
+                        src={data.business_img}
+                        alt='Business'
+                        width={250}
+                        height={250}
+                        unoptimized
+                      />
+                    </div>
+                    <p className='text-center font-bold text-gray-800'>
+                      {data.business_name}
+                    </p>
+                    <Link
+                      className='font-bold text-gray-800 text-center text-sm bg-white p-3 m-3 hover:bg-yellow-500 hover:scale-105 hover:brightness-110 rounded-md'
+                      href={`/${menuparams}/${data.id}`}
+                    >
+                      Discover More!
+                    </Link>
+                  </div>
+                ))
+              )}
             </div>
-          ))}
-        </div>}
-
-    
+          )}
+        </div>
       </div>
-    </div>
-    <Link
-            href={"/"}
-            className="w-1/4 p-2 rounded-md bg-gray-600 text-white text-center font-bold hover:bg-gray-700 transition"
-          >
-            ← Back
-          </Link>
+      <Link
+        href={'/'}
+        className='w-1/4 p-2 rounded-md bg-gray-600 text-white text-center font-bold hover:bg-gray-700 transition'
+      >
+        ← Back
+      </Link>
     </>
-    );
-
+  );
 }

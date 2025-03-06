@@ -24,9 +24,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang='en'>
-        
-   <body className="mb-48 bg-white w-full">
-        
+        <body className='mb-48 bg-white w-full'>
           <NextTopLoader
             color='#2299DD'
             initialPosition={0.08}
@@ -39,7 +37,7 @@ export default function RootLayout({ children }) {
           />
           <Header />
           {children}
-          <Footer/>
+          <Footer />
         </body>
       </html>
     </ClerkProvider>
