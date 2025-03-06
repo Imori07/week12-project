@@ -2,6 +2,7 @@
 import { db } from '@/utils/dbConnection';
 import Link from 'next/link';
 import Image from 'next/image';
+import BusinessFilter from '@/components/businessfilter';
 
 
 
@@ -19,7 +20,19 @@ export default async function MenuPage({ params }) {
   ]);
   console.log('all business results', business);
   const wrangleData = business.rows;
-  console.log(wrangleData);
+
+
+  const BusinessCafe = await db.query(`select * from business where business_type = $1`, [
+    "Cafe",
+  ]);
+
+const BusinessBars = await db.query(`select * from business where business_type = $1`, [
+  "Bars",
+]);
+
+const BusinessRestaurant = await db.query(`select * from business where business_type = $1`, [
+  "Restaurant",
+]);
 
  
 
@@ -31,9 +44,14 @@ export default async function MenuPage({ params }) {
         {menuparams}
       </h1>
       <div>
-  
-      
-        <div className='bg-white flex flex-row overflow-scroll'>
+    
+   {menuparams ==="foods" &&  <BusinessFilter 
+      businessId={business.rows}
+      cafe = {BusinessCafe.rows}
+      Restaurant = {BusinessRestaurant.rows}
+      Bars ={BusinessBars.rows}
+      />}  
+{menuparams  != "foods" && <div className='bg-white flex flex-row overflow-scroll'>
           {wrangleData.length > 0 ? '' : 'Sorry! There is no Business to show'}
           {wrangleData.map((data) => (
             <div
@@ -59,7 +77,9 @@ export default async function MenuPage({ params }) {
               </Link>
             </div>
           ))}
-        </div>
+        </div>}
+
+    
       </div>
     </div>
     <Link

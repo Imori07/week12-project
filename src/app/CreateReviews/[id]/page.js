@@ -26,13 +26,17 @@ export default async function CreateNewPage ({ params }) {
     [business.id]
   );
   console.log(businessdata);
+const businessMenu = businessdata.rows[0];
+console.log(businessMenu.menu_id)
   const wrangleData = businessdata.rows;
+  const menuTitle = wrangleData.menu_id;
   const userdata = await db.query(`select * from users where clerk_id = $1`,[userId]);
   const onedata = userdata.rows[0];
-  if (userdata.length === 0) {
-    notFound();
-  }
-  console.log(onedata)
+  console.log(onedata);
+  const menuName = await db.query(`select * from menu where id = $1`,[businessMenu.menu_id]);
+  const MenuTitle =  menuName.rows[0];
+  console.log(MenuTitle.title_name)
+
   async function handleSubmit(formValues) {
     "use server";
     const username = formValues.get("username");
@@ -44,8 +48,8 @@ export default async function CreateNewPage ({ params }) {
       `insert into reviews (username,comment,business_id,user_id) values ($1, $2, $3,$4)`,
       [ username, comment, businessId,userId]
     );
-    revalidatePath(`/foods/${business.id}`);
-    redirect(`/foods/${business.id}`);
+    revalidatePath(`/${MenuTitle.title_name}/${business.id}`);
+    redirect(`/${MenuTitle.title_name}/${business.id}`);
   }
 
   return (
@@ -100,7 +104,14 @@ export default async function CreateNewPage ({ params }) {
               Submit data
             </button>
           </form>
+          
         </div>
+        <Link
+            href={`/${MenuTitle.title_name}/${business.id}`}
+            className="w-1/4 p-2 rounded-md bg-gray-600 text-white text-center font-bold hover:bg-gray-700 transition"
+          >
+            ← Back
+          </Link>
       </div>
     </>
   );
