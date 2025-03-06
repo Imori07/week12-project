@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import styles from "@/styles/nearmeyelp.module.css";
 
 export default function NearbyRestaurants() {
-  const mapsKey = process.env.MAPS_API_KEY;
   const [location, setLocation] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
 
@@ -38,77 +37,53 @@ export default function NearbyRestaurants() {
     fetchData();
   }, []);
 
- 
   return (
     <div>
-
-  <div className="flex flex-col items-center gap-4 w-full bg-white m-6">
-     
-   <Link href = "/NearMeMap" className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105">See the map</Link>
-   <h2 className='items-center text-center capitalize text-black text-[40px] font-bold'>Nearby Restaurants</h2>
-      {location ? (
-         <p className='text-xl'>
-         <strong>Your Location is </strong>: {location.latitude}, {location.longitude}
-        </p>
-      ) : (
-        <p>Fetching location...</p>
-      )}
-          <Link
-            href={"/NearMeYelp"}
-            className=" p-2 rounded-md bg-gray-600 text-white text-center font-bold hover:bg-gray-700 transition"
-          >
-            ← Back
-          </Link>
+      <div className={styles.container}>
+        <Link href="/NearMeMap" className={styles.linkButton}>
+          See the map
+        </Link>
+        <h2 className={styles.heading}>Nearby Restaurants</h2>
+        {location ? (
+          <p>
+            <strong>Your Location is </strong>: {location.latitude},{" "}
+            {location.longitude}
+          </p>
+        ) : (
+          <p>Fetching location...</p>
+        )}
+        <Link href="/NearMeYelp" className={styles.linkButton}>
+          ← Back
+        </Link>
       </div>
-  
-     <div className='bg-white flex flex-row overflow-scroll'>
- 
+
+      <div className={styles.gridContainer}>
         {restaurants.map((restaurant) => (
-          <div
-            key={restaurant.id}
-           
->
-<div className='w-[250px] h-[250px]'>
-{restaurant.image_url && restaurant.image_url !== '' ? (
+          <div key={restaurant.id} className={styles.restaurantCard}>
+            <div>
               <img
-              className='h-full w-full object-cover'
-                src={restaurant.image_url}
+                className={styles.restaurantImage}
+                src={
+                  restaurant.image_url ||
+                  "https://as1.ftcdn.net/v2/jpg/04/62/93/66/1000_F_462936689_BpEEcxfgMuYPfTaIAOC1tCDurmsno7Sp.jpg"
+                }
                 alt={restaurant.name}
-                width={250}
-                  height={250}
-                  unoptimized="true"
               />
-            ) : (
-              <img
-              className='h-full w-full object-cover'
-                src={"https://as1.ftcdn.net/v2/jpg/04/62/93/66/1000_F_462936689_BpEEcxfgMuYPfTaIAOC1tCDurmsno7Sp.jpg"}
-                alt={"no image"}
-                width={250}
-                  height={250}
-                  unoptimized="true"
-              />
-            )}
             </div>
-            <p className="text-black font-bold">{restaurant.name}</p>
-            <p className="text-black font-bold">Rating: {restaurant.rating}</p>
-            <p className="text-black font-bold">Address: {restaurant.location?.address1}</p>
-            <p className="text-black font-bold">
-              Category:{' '}
-              {restaurant.categories
-                ?.map((category) => category.title)
-                .join(', ')}
-            </p>
-        
+
+            <div>
+              <p className={styles.textBlack}>{restaurant.name}</p>
+              <p className={styles.textGray}>⭐ {restaurant.rating}</p>
+              <p className={styles.textGray}>{restaurant.location?.address1}</p>
+              <p className={styles.textGray}>
+                {restaurant.categories
+                  ?.map((category) => category.title)
+                  .join(", ")}
+              </p>
+            </div>
           </div>
-          
         ))}
-  
-     </div>     
-  
-
-
-
       </div>
-  
+    </div>
   );
 }
