@@ -79,7 +79,6 @@ const BusinessRestaurant = await db.query(`select * from business where business
           ))}
         </div>}
 
-    
       </div>
     </div>
     <Link

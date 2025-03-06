@@ -54,7 +54,7 @@ export default function NearbyRestaurants() {
         <p>Fetching location...</p>
       )}
           <Link
-            href={"/NearMeYelp"}
+            href={"/"}
             className=" p-2 rounded-md bg-gray-600 text-white text-center font-bold hover:bg-gray-700 transition"
           >
             ← Back

@@ -67,6 +67,7 @@ export default async function UserPage({ params }) {
             <ul className="comments-list">
               {comments.map((comment) => (
                 <li key={comment.id} className="comment-item">
+                  <p className="comment-text"><strong>{comment.business_name}</strong></p>
                   <p className="comment-text">{comment.comment}</p>
                   <span className="comment-date">
                     {new Date(comment.created_at).toLocaleString()}
