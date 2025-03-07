@@ -4,6 +4,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaUserEdit } from "react-icons/fa";
 import "@/styles/user-profile.css"; // External CSS file
+import { db } from '@/utils/dbConnection';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 export const generateMetadata = async ({ params }) => {
   const { username } = params;
