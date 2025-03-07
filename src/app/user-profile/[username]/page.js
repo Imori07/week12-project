@@ -67,15 +67,23 @@ export default async function UserPage({ params }) {
             <ul className="comments-list">
               {comments.map((comment) => (
                 <li key={comment.id} className="comment-item">
+                  <p className="comment-text"><strong>{comment.business_name}</strong></p>
                   <p className="comment-text">{comment.comment}</p>
                   <span className="comment-date">
                     {new Date(comment.created_at).toLocaleString()}
                   </span>
+                  <button type="submit" onClick={ async function deletedata() {
+    "use server";
+    await db.query("DELETE FROM reviews WHERE id = $1", [comment.id]);
+    revalidatePath(`/user-profile/${username}`);
+    redirect(`/user-profile/${username}`);
+
+}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded-lg">delete</button>
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="no-comments">This user hasn't commented yet.</p>
+            <p className="no-comments">This user has not commented yet.</p>
           )}
         </div>
       </div>

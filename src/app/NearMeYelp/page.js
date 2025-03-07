@@ -52,7 +52,7 @@ export default function NearbyRestaurants() {
         ) : (
           <p>Fetching location...</p>
         )}
-        <Link href="/NearMeYelp" className={styles.linkButton}>
+        <Link href="/" className={styles.linkButton}>
           ← Back
         </Link>
       </div>
